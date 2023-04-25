@@ -1,7 +1,6 @@
 package com.example.demo.OAuth;
 
-import com.example.demo.OAuth.response.GoogleOAuthToken;
-import com.example.demo.OAuth.response.GoogleUser;
+import com.example.demo.OAuth.response.*;
 import com.example.demo.OAuth.response.SocialOAuth;
 import com.example.demo.exceptions.BaseException;
 import com.example.demo.src.response.GetUserResponse;
@@ -21,6 +20,7 @@ import static com.example.demo.response.BaseResponseStatus.INVALID_OAUTH_TYPE;
 @RequiredArgsConstructor
 public class OAuthService {
     private final GoogleOAuth googleOauth;
+    private final KakaoOAuth kakaoOAuth;
     private final HttpServletResponse response;
     private final UserService userService;
     private final JwtService jwtService;
@@ -29,9 +29,16 @@ public class OAuthService {
     public void accessRequest(SocialLoginType socialLoginType) throws IOException {
         String redirectURL;
         switch (socialLoginType){ //각 소셜 로그인을 요청하면 소셜로그인 페이지로 리다이렉트 해주는 프로세스이다.
-            case GOOGLE:{
+            case GOOGLE: {
                 redirectURL= googleOauth.getOauthRedirectURL();
-            }break;
+                break;
+            }
+
+            case KAKAO: {
+                redirectURL = kakaoOAuth.getOauthRedirectURL();
+                break;
+            }
+
             default:{
                 throw new BaseException(INVALID_OAUTH_TYPE);
             }
@@ -73,6 +80,30 @@ public class OAuthService {
                     return getSocialOAuthRes;
                 }
             }
+
+            case KAKAO: {
+                ResponseEntity<String> accessTokenResponse = kakaoOAuth.requestAccessToken(code);
+                KakaoOAuthToken oAuthToken = kakaoOAuth.getAccessToken(accessTokenResponse);
+
+                ResponseEntity<String> userInfoResponse = kakaoOAuth.requestUserInfo(oAuthToken);
+                KakaoUser kakaoUser = kakaoOAuth.getUserInfo(userInfoResponse);
+
+                if(userService.checkUserByEmail(kakaoUser.getEmail())) {
+                    GetUserResponse getUserRes = userService.getUserByEmail(kakaoUser.getEmail());
+                    String jwtToken = jwtService.createJwt(getUserRes.getId());
+                    SocialOAuth getSocialOAuthRes = new SocialOAuth(jwtToken, getUserRes.getId(), oAuthToken.getAccess_token(), oAuthToken.getToken_type());
+
+                    return getSocialOAuthRes;
+
+                } else {
+                    PostUserResponse postUserRes = userService.createOAuthUser(kakaoUser.toEntity());
+                    SocialOAuth getSocialOAuthRes = new SocialOAuth(postUserRes.getJwt(), postUserRes.getId(), oAuthToken.getAccess_token(), oAuthToken.getToken_type());
+
+                    return getSocialOAuthRes;
+                }
+
+            }
+
             default: {
                 throw new BaseException(INVALID_OAUTH_TYPE);
             }

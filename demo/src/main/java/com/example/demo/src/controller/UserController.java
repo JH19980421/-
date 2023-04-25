@@ -170,5 +170,4 @@ public class UserController {
         SocialOAuth getSocialOAuthRes = oAuthService.oAuthLoginOrJoin(socialLoginType,code);
         return new BaseResponse<>(getSocialOAuthRes);
     }
-
 }

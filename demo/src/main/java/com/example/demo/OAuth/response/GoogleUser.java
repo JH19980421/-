@@ -9,7 +9,6 @@ import lombok.Setter;
 import static com.example.demo.OAuth.SocialLoginType.GOOGLE;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class GoogleUser {

@@ -53,6 +53,8 @@ public class UserService {
     }
 
     public PostUserResponse createOAuthUser(User user) {
+        System.out.println(user.getEmail());
+        System.out.println(user.getName());
         User saveUser = userRepository.save(user);
 
         // JWT 발급
