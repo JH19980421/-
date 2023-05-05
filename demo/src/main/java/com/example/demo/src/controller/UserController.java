@@ -15,6 +15,7 @@ import com.example.demo.src.service.UserService;
 import com.example.demo.src.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ import static com.example.demo.src.utils.ValidationRegex.isRegexEmail;
 
 @Slf4j
 @RequiredArgsConstructor
-@RestController
+@Controller
 @RequestMapping("/app/users")
 public class UserController {
 
