@@ -22,11 +22,7 @@ public class GoogleUser {
     public String locale;
 
     public User toEntity() {
-        return User.builder()
-                .email(this.email)
-                .password("NONE")
-                .name(this.name)
-                .isOAuth(GOOGLE)
-                .build();
+        User user = new User(this.email,"NONE",this.name,GOOGLE);
+        return user;
     }
 }

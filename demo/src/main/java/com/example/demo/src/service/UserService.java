@@ -47,7 +47,8 @@ public class UserService {
             throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
         }
 
-        User saveUser = userRepository.save(postUserRequest.toEntity());
+        User saveUser = new User(postUserRequest.getEmail(), postUserRequest.getPassword(), postUserRequest.getName(), postUserRequest.getIsOAuth());
+        userRepository.save(saveUser);
         return new PostUserResponse(saveUser.getId());
 
     }

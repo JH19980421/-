@@ -34,7 +34,8 @@ public class BoardService {
             return postBoardResponse;
         }
 
-        Board board = boardRepository.save(postBoardRequest.toEntity());
+        Board board = new Board(postBoardRequest.getTitle(), postBoardRequest.getContent(), postBoardRequest.getWriter(), 0);
+        boardRepository.save(board);
         PostBoardResponse postBoardResponse = new PostBoardResponse(board.getId());
 
         return postBoardResponse;

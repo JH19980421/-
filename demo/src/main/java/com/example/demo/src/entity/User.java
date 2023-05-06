@@ -30,9 +30,7 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SocialLoginType isOAuth;
 
-    @Builder
-    public User(Long id, String email, String password, String name, SocialLoginType isOAuth) {
-        this.id = id;
+    public User(String email, String password, String name, SocialLoginType isOAuth) {
         this.email = email;
         this.password = password;
         this.name = name;

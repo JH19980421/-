@@ -21,11 +21,4 @@ public class PostBoardRequest {
     @Size(min = 1, max = 10)
     private String writer;
 
-    public Board toEntity() {
-        return Board.builder()
-                .title(this.title)
-                .content(content)
-                .writer(this.writer)
-                .build();
-    }
 }

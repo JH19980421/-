@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static com.example.demo.OAuth.SocialLoginType.GOOGLE;
 import static com.example.demo.OAuth.SocialLoginType.KAKAO;
 
 @Getter
@@ -15,11 +16,7 @@ public class KakaoUser {
     private String email;
 
     public User toEntity() {
-        return User.builder()
-                .email(this.email)
-                .password("NONE")
-                .name(this.nickname)
-                .isOAuth(KAKAO)
-                .build();
+        User user = new User(this.email,"NONE",this.nickname, KAKAO);
+        return user;
     }
 }
