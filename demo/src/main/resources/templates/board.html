@@ -18,7 +18,7 @@
         </div >
         
         <div class="container">
-        총 건수 : <span th:text="${#lists.size(boards)}"></span>
+        총 건수 : <span th:text="${boards.totalElements}"></span>
         </div>
 
         <table class="table">
@@ -39,10 +39,20 @@
               </tr>
             </tbody>
           </table>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
+                <a class="page-link" th:href="@{/app/boards/home(page=${boards.number})}">Previous</a>
+              </li>
+              <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}"><a class="page-link" th:href="@{/app/boards/home(page=${i})}" th:text="${i}"></a></li>
+              <li class="page-item">
+                <a class="page-link" th:href="@{/app/boards/home(page=${boards.number+2})}">Next</a>
+              </li>
+            </ul>
+          </nav>
           <div class="text-end">
-            <a type="button" class="btn btn-secondary" th:href="@{write}">작성하기</a>
+              <a type="button" class="btn btn-secondary" th:href="@{write}">작성하기</a>
           </div>
-          
     </main>
 
     <script src="/docs/5.2/dist/js/bootstrap.bundle.min.js"
