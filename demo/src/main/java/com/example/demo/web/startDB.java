@@ -30,7 +30,7 @@ public class startDB {
     static class InitService {
         private final BoardRepository boardRepository;
         public void initBoard() {
-            for (int i = 1; i <= 100; i++) {
+            for (int i = 1; i <= 1000; i++) {
                 Board board = new Board("제목" + i,"내용" + i,"작성자" + i);
                 boardRepository.save(board);
             }
