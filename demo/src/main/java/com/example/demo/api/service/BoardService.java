@@ -68,6 +68,21 @@ public class BoardService {
         return page;
     }
 
+    public Page<Board> findPageByTitleOrContentOrWriter(String title, String content, String writer, Pageable pageable) {
+        Page<Board> page = boardRepository.findByTitleContainingOrContentContainingOrWriterContaining(title, content, writer, pageable);
+        return page;
+    }
+
+    public Page<Board> findPageByTitleOrContent(String title, String content, Pageable pageable) {
+        Page<Board> page = boardRepository.findByTitleContainingOrContentContaining(title, content, pageable);
+        return page;
+    }
+
+    public Page<Board> findPageByWriter(String writer, Pageable pageable) {
+        Page<Board> page = boardRepository.findByWriterContaining(writer, pageable);
+        return page;
+    }
+
     private Board makeBoard(Long id) {
         return boardRepository.findByIdAndState(id, ACTIVE).orElse(null);
     }

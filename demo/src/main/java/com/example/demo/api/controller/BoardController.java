@@ -24,8 +24,25 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/home")
-    public String getBoardList(Model model, @PageableDefault(size = 20) Pageable pageable) {
-        Page<Board> page = boardService.findPage(pageable);
+    public String getBoardList(Model model, @PageableDefault(size = 20) Pageable pageable,
+                               @RequestParam(required = false, defaultValue = "") String search,
+                               @RequestParam(required = false, defaultValue = "") String selectValue) {
+
+        Page<Board> page;
+
+        switch (selectValue) {
+            case "1" :
+                page = boardService.findPageByTitleOrContentOrWriter(search,search,search,pageable);
+                break;
+            case "2" :
+                page = boardService.findPageByTitleOrContent(search, search, pageable);
+                break;
+            case "3" :
+                page = boardService.findPageByWriter(search, pageable);
+                break;
+            default: page = boardService.findPage(pageable);
+        }
+
         model.addAttribute("boards", page);
 
         int startPage = 5 * (page.getNumber() / 5) + 1;

@@ -13,15 +13,15 @@
 
 <body>
   <main class="container">
-    <div class="bg-light p-5 rounded">
+    <!-- <div class="bg-light p-5 rounded">
       <h1>게시판</h1>
     </div>
 
     <div class="container">
       총 건수 : <span th:text="${boards.totalElements}"></span>
-    </div>
+    </div> -->
 
-    <table class="table">
+    <table class="table" style="margin-top: 50px;">
       <thead>
         <tr>
           <th scope="col">번호</th>
@@ -42,31 +42,31 @@
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
         <li class="page-item">
-          <a class="page-link" th:href="@{/app/boards/home(page=${boards.number})}">Previous</a>
+          <a class="page-link" th:href="@{/app/boards/home(page=${boards.number}, selectValue=${param.selectValue}, search=${param.search})}">Previous</a>
         </li>
         <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}"><a class="page-link"
-            th:href="@{/app/boards/home(page=${i})}" th:text="${i}"></a></li>
+            th:href="@{/app/boards/home(page=${i}, selectValue=${param.selectValue}, search=${param.search})}" th:text="${i}"></a></li>
         <li class="page-item">
-          <a class="page-link" th:href="@{/app/boards/home(page=${boards.number+2})}">Next</a>
+          <a class="page-link" th:href="@{/app/boards/home(page=${boards.number+2}, selectValue=${param.selectValue}, search=${param.search})}">Next</a>
         </li>
       </ul>
     </nav>
-    <div class="row" style="justify-content: flex-end;">
-      <select class="form-select" style="width: 100px;">
+    <form class="row" style="justify-content: flex-end; margin-bottom: 100px;" method="GET" th:action="@{/app/boards/home}">
+      <select class="form-select" style="width: 100px;" th:name="selectValue">
         <option value="1">전체</option>
         <option value="2">제목+내용</option>
         <option value="3">작성자</option>
       </select>
       <div class="col-auto">
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" name="search" th:value="${param.search}">
       </div>
       <div class="col-auto">
-        <a type="button" class="btn btn-outline-primary" role="button" th:href="@{#}">검색</a>
+        <a type="button" class="btn btn-outline-primary" role="button" th:href="@{/app/boards/home}">검색</a>
       </div>
       <div class="col-auto">
-        <a type="button" class="btn btn-outline-secondary" role="button" th:href="@{write}">작성</a>
+        <a type="button" class="btn btn-outline-secondary" role="button" th:href="@{/app/boards/write}">작성</a>
       </div>
-    </div>
+    </form>
   </main>
 
   <script src="/docs/5.2/dist/js/bootstrap.bundle.min.js"
