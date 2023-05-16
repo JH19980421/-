@@ -28,7 +28,6 @@ public class BoardController {
         Page<Board> page = boardService.findPage(pageable);
         model.addAttribute("boards", page);
 
-
         int startPage = 5 * (page.getNumber() / 5) + 1;
         int endPage = Math.min(page.getTotalPages(), startPage + 4);
 
