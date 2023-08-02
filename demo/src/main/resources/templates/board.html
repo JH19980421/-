@@ -53,7 +53,7 @@
                    th:style="${i == boards.pageable.pageNumber + 1} ? 'background : #dddddd'"
                    th:href="@{/app/boards/home(page=${i}, selectValue=${param.selectValue}, search=${param.search})}"
                    th:text="${i}"></a></li>
-            <li th:if="${!#strings.equals(param.page, endPage)}" class="page-item">
+            <li th:if="${!#strings.equals(param.page, boards.totalPages)}" class="page-item">
                 <a class="page-link"
                    th:href="@{/app/boards/home(page=${boards.number+2}, selectValue=${param.selectValue}, search=${param.search})}">Next</a>
             </li>

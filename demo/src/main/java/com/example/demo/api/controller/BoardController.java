@@ -49,7 +49,6 @@ public class BoardController {
         int startPage = 5 * (page.getNumber() / 5) + 1;
         int endPage = Math.min(page.getTotalPages(), startPage + 4);
 
-
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
