@@ -27,7 +27,7 @@
           제목을 입력해주세요.
         </div>
         <label for="title" class="form-label">작성자</label>
-        <input type="text" class="form-control" th:classappend="${#fields.hasErrors('writer')} ? ' is-invalid'"
+        <input maxlength="5" type="text" class="form-control" th:classappend="${#fields.hasErrors('writer')} ? ' is-invalid'"
           id="title" placeholder="작성자를 입력하세요." th:field="*{writer}">
         <div id="validationServer03Feedback" th:if="${#fields.hasErrors('writer')}" class="invalid-feedback">
           작성자를 입력해주세요.

@@ -4,6 +4,7 @@ import com.example.demo.api.entity.Board;
 import com.example.demo.api.request.PostBoardRequest;
 import com.example.demo.api.response.GetBoardResponse;
 import com.example.demo.api.service.BoardService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -48,11 +49,13 @@ public class BoardController {
         int startPage = 5 * (page.getNumber() / 5) + 1;
         int endPage = Math.min(page.getTotalPages(), startPage + 4);
 
+
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
         return "board";
     }
+
 
     @GetMapping("/write")
     public String write(Model model, @RequestParam(required = false) Long id) {

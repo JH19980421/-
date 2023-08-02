@@ -1,4 +1,7 @@
 spring:
+
+  thymeleaf:
+    cache: false
   datasource:
     url: jdbc:h2:tcp://localhost/~/test
     username: sa
@@ -38,5 +41,7 @@ logging:
 
 jwt:
   secret-key: UwKYibQQgkW7gkap9kjewxBHb9wdXoBT4vnt4P3sJWtNu  # JWT key. 수정해주세요
+
+
 
 
