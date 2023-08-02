@@ -49,7 +49,7 @@
         <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}" th:classappend="${i == boards.pageable.pageNumber + 1} ? 'disabled'">
           <a class="page-link"
             th:href="@{/app/boards/home(page=${i}, selectValue=${param.selectValue}, search=${param.search})}" th:text="${i}" ></a></li>
-        <li class="page-item">
+        <li th:if="${!#strings.equals(param.page, endPage)}" class="page-item">
           <a class="page-link" th:href="@{/app/boards/home(page=${boards.number+2}, selectValue=${param.selectValue}, search=${param.search})}">Next</a>
         </li>
       </ul>
