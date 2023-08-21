@@ -1,7 +1,7 @@
 package com.example.demo.api.response;
 
 
-import com.example.demo.api.entity.User;
+import com.example.demo.api.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,9 +12,9 @@ public class GetUserResponse {
     private String email;
     private String name;
 
-    public GetUserResponse(User user) {
-        this.id = user.getId();
-        this.email = user.getEmail();
-        this.name = user.getName();
+    public GetUserResponse(Member member) {
+        this.id = member.getId();
+        this.email = member.getEmail();
+        this.name = member.getName();
     }
 }

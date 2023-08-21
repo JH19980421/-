@@ -1,7 +1,7 @@
 package com.example.demo.api.service;
 
 import com.example.demo.web.exceptions.BaseException;
-import com.example.demo.api.entity.User;
+import com.example.demo.api.entity.Member;
 import com.example.demo.api.repository.UserRepository;
 import com.example.demo.api.request.PatchUserRequest;
 import com.example.demo.api.request.PostLoginRequest;
@@ -38,33 +38,33 @@ public class UserService {
 
         String encryptPwd = new SHA256().encrypt(postUserRequest.getPassword());
 
-        User saveUser = User.createUser(postUserRequest.getEmail(), encryptPwd, postUserRequest.getName(), postUserRequest.getIsOAuth());
-        userRepository.save(saveUser);
-        return new PostUserResponse(saveUser.getId());
+        Member saveMember = Member.createUser(postUserRequest.getEmail(), encryptPwd, postUserRequest.getName(), postUserRequest.getIsOAuth());
+        userRepository.save(saveMember);
+        return new PostUserResponse(saveMember.getId());
 
     }
 
-    public PostUserResponse createOAuthUser(User user) {
-        System.out.println(user.getEmail());
-        System.out.println(user.getName());
-        User saveUser = userRepository.save(user);
+    public PostUserResponse createOAuthUser(Member member) {
+        System.out.println(member.getEmail());
+        System.out.println(member.getName());
+        Member saveMember = userRepository.save(member);
 
         // JWT 발급
-        String jwtToken = jwtService.createJwt(saveUser.getId());
-        return new PostUserResponse(saveUser.getId(), jwtToken);
+        String jwtToken = jwtService.createJwt(saveMember.getId());
+        return new PostUserResponse(saveMember.getId(), jwtToken);
 
     }
 
     public void modifyUserName(Long userId, PatchUserRequest patchUserRequest) {
-        User user = userRepository.findByIdAndState(userId, ACTIVE)
+        Member member = userRepository.findByIdAndState(userId, ACTIVE)
                 .orElseThrow(() -> new BaseException(NOT_FIND_USER));
-        user.updateName(patchUserRequest.getName());
+        member.updateName(patchUserRequest.getName());
     }
 
     public void deleteUser(Long userId) {
-        User user = userRepository.findByIdAndState(userId, ACTIVE)
+        Member member = userRepository.findByIdAndState(userId, ACTIVE)
                 .orElseThrow(() -> new BaseException(NOT_FIND_USER));
-        user.inActive();
+        member.inActive();
     }
 
     @Transactional(readOnly = true)
@@ -98,16 +98,16 @@ public class UserService {
     }
 
     public PostLoginResponse logIn(PostLoginRequest postLoginRequest) {
-        User user = userRepository.findByEmailAndState(postLoginRequest.getEmail(), ACTIVE)
+        Member member = userRepository.findByEmailAndState(postLoginRequest.getEmail(), ACTIVE)
                 .orElseThrow(() -> new BaseException(NOT_FIND_USER));
 
-        if (isNotMatchedPassword(postLoginRequest.getPassword(), user.getPassword())) {
+        if (isNotMatchedPassword(postLoginRequest.getPassword(), member.getPassword())) {
             throw new BaseException(FAILED_TO_LOGIN);
         }
 
         return new PostLoginResponse(
-                user.getId(),
-                jwtService.createJwt(user.getId())
+                member.getId(),
+                jwtService.createJwt(member.getId())
         );
     }
 
@@ -118,7 +118,7 @@ public class UserService {
     }
 
     public GetUserResponse getUserByEmail(String email) {
-        User user = userRepository.findByEmailAndState(email, ACTIVE).orElseThrow(() -> new BaseException(NOT_FIND_USER));
-        return new GetUserResponse(user);
+        Member member = userRepository.findByEmailAndState(email, ACTIVE).orElseThrow(() -> new BaseException(NOT_FIND_USER));
+        return new GetUserResponse(member);
     }
 }

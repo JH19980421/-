@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "Member")
-public class User extends BaseEntity {
+public class Member extends BaseEntity {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,16 +34,16 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    public User(String email, String password, String name, SocialLoginType isOAuth) {
+    public Member(String email, String password, String name, SocialLoginType isOAuth) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.isOAuth = isOAuth;
     }
 
-    public static User createUser(String email, String password, String name, SocialLoginType isOAuth) {
+    public static Member createUser(String email, String password, String name, SocialLoginType isOAuth) {
 
-        return new User(email, password, name, isOAuth);
+        return new Member(email, password, name, isOAuth);
     }
 
     public void updateName(String name) {

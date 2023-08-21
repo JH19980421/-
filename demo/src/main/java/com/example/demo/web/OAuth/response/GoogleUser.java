@@ -1,7 +1,6 @@
 package com.example.demo.web.OAuth.response;
 
-import com.example.demo.api.entity.User;
-import lombok.AllArgsConstructor;
+import com.example.demo.api.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,8 +18,8 @@ public class GoogleUser {
     public String picture;
     public String locale;
 
-    public User toEntity() {
-        User user = new User(this.email,"NONE",this.name,GOOGLE);
-        return user;
+    public Member toEntity() {
+        Member member = new Member(this.email,"NONE",this.name,GOOGLE);
+        return member;
     }
 }
