@@ -30,6 +30,10 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SocialLoginType isOAuth;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
+
     public User(String email, String password, String name, SocialLoginType isOAuth) {
         this.email = email;
         this.password = password;
@@ -49,4 +53,14 @@ public class User extends BaseEntity {
         this.state = State.INACTIVE;
     }
 
+    @Getter
+    private enum UserRole {
+        ADMIN("ROLE_ADMIN"), USER("ROLE_USER");
+
+        UserRole(String value) {
+            this.value = value;
+        }
+
+        private String value;
+    }
 }
