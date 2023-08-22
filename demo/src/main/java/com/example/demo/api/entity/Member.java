@@ -30,7 +30,7 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SocialLoginType isOAuth;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 

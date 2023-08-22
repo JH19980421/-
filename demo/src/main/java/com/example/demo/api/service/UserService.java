@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.example.demo.web.entity.BaseEntity.State.ACTIVE;
@@ -92,9 +93,9 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public boolean checkUserByEmail(String email) {
-        if (Objects.nonNull(userRepository.findByEmailAndState(email, ACTIVE))) return true;
+        Optional<Member> user = userRepository.findByEmailAndState(email, ACTIVE);
 
-        return false;
+        return user.isPresent();
     }
 
     public PostLoginResponse logIn(PostLoginRequest postLoginRequest) {
