@@ -42,18 +42,14 @@ public class UserService {
         Member saveMember = Member.createUser(postUserRequest.getEmail(), encryptPwd, postUserRequest.getName(), postUserRequest.getIsOAuth());
         userRepository.save(saveMember);
         return new PostUserResponse(saveMember.getId());
-
     }
 
     public PostUserResponse createOAuthUser(Member member) {
-        System.out.println(member.getEmail());
-        System.out.println(member.getName());
         Member saveMember = userRepository.save(member);
 
         // JWT 발급
         String jwtToken = jwtService.createJwt(saveMember.getId());
         return new PostUserResponse(saveMember.getId(), jwtToken);
-
     }
 
     public void modifyUserName(Long userId, PatchUserRequest patchUserRequest) {
