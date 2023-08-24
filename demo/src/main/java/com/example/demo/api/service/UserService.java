@@ -1,5 +1,6 @@
 package com.example.demo.api.service;
 
+import com.example.demo.web.OAuth.SocialLoginType;
 import com.example.demo.web.exceptions.BaseException;
 import com.example.demo.api.entity.Member;
 import com.example.demo.api.repository.UserRepository;
@@ -12,6 +13,7 @@ import com.example.demo.api.response.PostUserResponse;
 import com.example.demo.api.utils.JwtService;
 import com.example.demo.api.utils.SHA256;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.example.demo.web.OAuth.SocialLoginType.LOCAL;
 import static com.example.demo.web.entity.BaseEntity.State.ACTIVE;
 import static com.example.demo.web.response.BaseResponseStatus.*;
 
@@ -29,17 +32,20 @@ import static com.example.demo.web.response.BaseResponseStatus.*;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
     //POST
     public PostUserResponse createUser(PostUserRequest postUserRequest) {
         //중복 체크
-        userRepository.findByEmailAndState(postUserRequest.getEmail(), ACTIVE)
-                .orElseThrow(() -> new BaseException(POST_USERS_EXISTS_EMAIL));
+        Optional<Member> member = userRepository.findByEmailAndState(postUserRequest.getEmail(), ACTIVE);
 
-        String encryptPwd = new SHA256().encrypt(postUserRequest.getPassword());
+        if (member.isPresent()) throw new BaseException(DUPLICATED_EMAIL);
 
-        Member saveMember = Member.createUser(postUserRequest.getEmail(), encryptPwd, postUserRequest.getName(), postUserRequest.getIsOAuth());
+//        String encryptPwd = new SHA256().encrypt(postUserRequest.getPassword());
+
+        Member saveMember = Member.createUser(postUserRequest.getEmail(),
+                passwordEncoder.encode(postUserRequest.getPassword()), postUserRequest.getName(), LOCAL);
         userRepository.save(saveMember);
         return new PostUserResponse(saveMember.getId());
     }
