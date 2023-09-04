@@ -24,7 +24,7 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
-                        .loginPage("/signin")
+                        .loginPage("/signinup")
                         .permitAll()
                 )
                 .logout((logout) -> logout.permitAll());
