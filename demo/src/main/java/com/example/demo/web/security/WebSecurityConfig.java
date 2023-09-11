@@ -20,11 +20,13 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/**").permitAll()
+                        .antMatchers("/app/boards/home",
+                                "/app/users/signup","/app/users/signin","/css/**", "/js/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
-                        .loginPage("/signinup")
+                        .loginPage("/sign")
+                        .defaultSuccessUrl("/app/users/board", true)
                         .permitAll()
                 )
                 .logout((logout) -> logout.permitAll());

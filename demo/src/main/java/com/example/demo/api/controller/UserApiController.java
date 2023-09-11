@@ -34,7 +34,7 @@ public class UserApiController {
     private final OAuthService oAuthService;
 
     @PostMapping("/signup")
-    public BaseResponse<PostUserResponse> createUser(PostUserRequest postUserRequest, BindingResult bindingResult) {
+    public BaseResponse<PostUserResponse> createUser(PostUserRequest postUserRequest) {
         if (StringUtils.isBlank(postUserRequest.getEmail())) {
             return new BaseResponse<>(USERS_EMPTY_EMAIL);
         }
@@ -98,8 +98,8 @@ public class UserApiController {
      *
      * @return BaseResponse<PostLoginRes>
      */
-    @PostMapping("/logIn")
-    public BaseResponse<PostLoginResponse> logIn(@RequestBody PostLoginRequest postLoginReq) {
+    @PostMapping("/signin")
+    public BaseResponse<PostLoginResponse> logIn(PostLoginRequest postLoginReq) {
         // TODO: 로그인 값들에 대한 형식적인 validatin 처리해주셔야합니다!
         // TODO: 유저의 status ex) 비활성화된 유저, 탈퇴한 유저 등을 관리해주고 있다면 해당 부분에 대한 validation 처리도 해주셔야합니다.
         PostLoginResponse postLoginRes = userService.logIn(postLoginReq);
