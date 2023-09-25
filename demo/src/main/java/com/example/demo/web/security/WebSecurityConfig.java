@@ -35,7 +35,11 @@ public class WebSecurityConfig {
                         .defaultSuccessUrl("/app/boards/home", true)
                         .permitAll()
                 )
-                .logout((logout) -> logout.permitAll());
+                .logout((logout) -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/app/boards/home")
+                        .invalidateHttpSession(true)
+                        .permitAll());
 
         return http.build();
     }
@@ -45,16 +49,4 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("password")
-//                        .roles("USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
 }

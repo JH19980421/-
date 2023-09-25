@@ -11,46 +11,47 @@ import java.util.Collection;
 
 @Data
 public class MemberDetails implements UserDetails {
-    public String email;
-    public String password;
-    public MemberDetails(String email, String password) {
-        this.email = email;
-        this.password = password;
+    public User user;
+    public String name;
+
+    public MemberDetails(User user, String name) {
+        this.user = user;
+        this.name = name;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return user.getAuthorities();
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return email;
+        return user.getUsername();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return user.isAccountNonExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return user.isAccountNonLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return user.isCredentialsNonExpired();
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return user.isEnabled();
     }
 
 }

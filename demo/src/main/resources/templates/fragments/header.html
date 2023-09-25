@@ -23,7 +23,8 @@
         </form>
   
         <div class="text-end" >
-          <button type="button" class="btn btn-warning" onclick="location.href='/sign';">로그인/회원가입</button>
+          <button sec:authorize="isAnonymous()" type="button" class="btn btn-warning" onclick="location.href='/sign';">로그인/회원가입</button>
+          <button sec:authorize="isAuthenticated()" th:text="${#authentication.principal.name}" type="button" class="btn btn-warning" onclick="location.href='/logout';"></button>
         </div>
       </div>
     </div>
