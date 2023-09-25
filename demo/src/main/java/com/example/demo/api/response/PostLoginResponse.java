@@ -12,5 +12,5 @@ import lombok.Setter;
 public class PostLoginResponse {
 
     private Long id;
-    private String jwt;
+//    private String jwt;
 }

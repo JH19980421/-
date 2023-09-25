@@ -3,6 +3,7 @@ package com.example.demo.api.entity;
 import com.example.demo.web.OAuth.SocialLoginType;
 import com.example.demo.web.entity.BaseEntity;
 import lombok.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 
@@ -30,10 +31,6 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SocialLoginType isOAuth;
 
-    @Column(nullable = true)
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
-
     public Member(String email, String password, String name, SocialLoginType isOAuth) {
         this.email = email;
         this.password = password;
@@ -53,14 +50,4 @@ public class Member extends BaseEntity {
         this.state = State.INACTIVE;
     }
 
-    @Getter
-    private enum UserRole {
-        ADMIN("ROLE_ADMIN"), USER("ROLE_USER");
-
-        UserRole(String value) {
-            this.value = value;
-        }
-
-        private String value;
-    }
 }

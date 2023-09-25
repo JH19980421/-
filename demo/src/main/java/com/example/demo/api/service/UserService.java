@@ -13,6 +13,7 @@ import com.example.demo.api.response.PostUserResponse;
 import com.example.demo.api.utils.JwtService;
 import com.example.demo.api.utils.SHA256;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,20 +105,18 @@ public class UserService {
         Member member = userRepository.findByEmailAndState(postLoginRequest.getEmail(), ACTIVE)
                 .orElseThrow(() -> new BaseException(NOT_FIND_USER));
 
-        if (isNotMatchedPassword(postLoginRequest.getPassword(), member.getPassword())) {
+        if (!isNotMatchedPassword(postLoginRequest.getPassword(), member.getPassword())) {
             throw new BaseException(FAILED_TO_LOGIN);
         }
 
         return new PostLoginResponse(
-                member.getId(),
-                jwtService.createJwt(member.getId())
+                member.getId()
+//                jwtService.createJwt(member.getId())
         );
     }
 
     private boolean isNotMatchedPassword(String plainPassword, String encryptPassword) {
-
-        String encrypt = new SHA256().encrypt(plainPassword);
-        return !encrypt.equals(encryptPassword);
+        return BCrypt.checkpw(plainPassword, encryptPassword);
     }
 
     public GetUserResponse getUserByEmail(String email) {

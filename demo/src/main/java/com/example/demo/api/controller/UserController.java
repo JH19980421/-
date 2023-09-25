@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/app/users")
+@RequestMapping("")
 public class UserController {
 
     @GetMapping("/sign")

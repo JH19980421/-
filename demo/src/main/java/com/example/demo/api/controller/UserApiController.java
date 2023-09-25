@@ -6,6 +6,7 @@ import com.example.demo.api.request.PostUserRequest;
 import com.example.demo.api.response.GetUserResponse;
 import com.example.demo.api.response.PostLoginResponse;
 import com.example.demo.api.response.PostUserResponse;
+import com.example.demo.api.service.UserSecurityService;
 import com.example.demo.api.service.UserService;
 import com.example.demo.web.OAuth.OAuthService;
 import com.example.demo.web.OAuth.SocialLoginType;
@@ -31,6 +32,7 @@ import static com.example.demo.web.response.BaseResponseStatus.*;
 @RequestMapping("/app/users")
 public class UserApiController {
     private final UserService userService;
+    private final UserSecurityService userSecurityService;
     private final OAuthService oAuthService;
 
     @PostMapping("/signup")
@@ -98,13 +100,13 @@ public class UserApiController {
      *
      * @return BaseResponse<PostLoginRes>
      */
-    @PostMapping("/signin")
-    public BaseResponse<PostLoginResponse> logIn(PostLoginRequest postLoginReq) {
-        // TODO: 로그인 값들에 대한 형식적인 validatin 처리해주셔야합니다!
-        // TODO: 유저의 status ex) 비활성화된 유저, 탈퇴한 유저 등을 관리해주고 있다면 해당 부분에 대한 validation 처리도 해주셔야합니다.
-        PostLoginResponse postLoginRes = userService.logIn(postLoginReq);
-        return new BaseResponse<>(postLoginRes);
-    }
+//    @PostMapping("/signin")
+//    public BaseResponse<PostLoginResponse> logIn(PostLoginRequest postLoginReq) {
+//        // TODO: 로그인 값들에 대한 형식적인 validatin 처리해주셔야합니다!
+//        // TODO: 유저의 status ex) 비활성화된 유저, 탈퇴한 유저 등을 관리해주고 있다면 해당 부분에 대한 validation 처리도 해주셔야합니다.
+//        PostLoginResponse postLoginRes = userService.logIn(postLoginReq);
+//        return new BaseResponse<>(postLoginRes);
+//    }
 
 
     /**
@@ -137,4 +139,6 @@ public class UserApiController {
         SocialOAuth getSocialOAuthRes = oAuthService.oAuthLoginOrJoin(socialLoginType, code);
         return new BaseResponse<>(getSocialOAuthRes);
     }
+
+
 }
