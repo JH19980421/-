@@ -20,7 +20,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/app/boards/home",
+                        .antMatchers("/app/boards/home","/app/users/auth/google/login","/app/users/auth/kakao/login",
                                 "/app/users/signup","/css/**", "/js/**").permitAll()
                         .anyRequest().authenticated()
                 )
