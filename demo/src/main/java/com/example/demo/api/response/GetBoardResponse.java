@@ -1,9 +1,12 @@
 package com.example.demo.api.response;
 
 import com.example.demo.api.entity.Board;
+import com.example.demo.api.entity.File;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 import static com.example.demo.web.entity.BaseEntity.*;
 
@@ -16,6 +19,7 @@ public class GetBoardResponse {
     private String title;
     private String writer;
     private String content;
+    private List<File> files;
     private State state;
 
     public GetBoardResponse(Board board) {
@@ -24,5 +28,6 @@ public class GetBoardResponse {
         this.content = board.getContent();
         this.writer = board.getWriter();
         this.state = board.getState();
+        this.files = board.getFiles();
     }
 }

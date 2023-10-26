@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -17,7 +19,7 @@ public class BoardApiController {
     private final BoardService boardService;
 
     @PostMapping("")
-    public BaseResponse<PostBoardResponse> createBoard(@RequestBody PostBoardRequest postBoardRequest) {
+    public BaseResponse<PostBoardResponse> createBoard(@RequestBody PostBoardRequest postBoardRequest) throws IOException {
         PostBoardResponse postBoardResponse = boardService.createBoard(postBoardRequest);
 
         return new BaseResponse<>(postBoardResponse);

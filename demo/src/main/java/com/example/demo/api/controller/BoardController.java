@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Objects;
 
 @Slf4j
@@ -70,7 +71,7 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String getBoardForm(PostBoardRequest postBoardRequest, BindingResult bindingResult) {
+    public String getBoardForm(PostBoardRequest postBoardRequest, BindingResult bindingResult) throws IOException {
         if (bindingResult.hasErrors()){
             return "redirect:home";
         }

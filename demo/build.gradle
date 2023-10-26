@@ -29,7 +29,7 @@ dependencies {
 //  Temporary explicit version to fix Thymeleaf bug
 	implementation 'org.springframework.security:spring-security-test'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-
+	implementation 'commons-io:commons-io:2.6'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3

@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,6 +26,8 @@ public class Board extends BaseEntity {
     @NotNull
     @Size(min = 1, max = 10)
     private String writer;
+    @OneToMany(mappedBy = "board")
+    private List<File> files;
     @Column
     private int views = 0;
 
@@ -32,6 +35,10 @@ public class Board extends BaseEntity {
         this.title = title;
         this.content = content;
         this.writer = writer;
+    }
+
+    public void addFilesToBoard(List<File> files) {
+        this.files = files;
     }
 
     public void deleteBoard() {

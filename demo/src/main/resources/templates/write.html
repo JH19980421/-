@@ -17,7 +17,7 @@
       <h1>게시판</h1>
     </div>
 
-    <form action="#" th:action="@{write}" th:object="${board}" method="post">
+    <form th:action="@{write}" th:object="${board}" method="post" enctype="multipart/form-data">
       <div class="mb-3">
         <input type="hidden" th:field="*{id}">
         <label for="title" class="form-label">제목</label>
@@ -37,6 +37,11 @@
         <label for="content" class="form-label">내용</label>
         <textarea class="form-control" id="content" rows="3"
           th:classappend="${#fields.hasErrors('content')} ? ' is-invalid'" th:field="*{content}"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="content" class="form-label">첨부파일</label>
+        <br>
+        <input type="file" multiple="multiple" th:field="*{files}">
       </div>
       <div id="validationServer03Feedback" th:if="${#fields.hasErrors('content')}" class="invalid-feedback">
         내용을 입력해주세요.

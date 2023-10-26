@@ -1,17 +1,18 @@
 package com.example.demo.api.service;
 
 import com.example.demo.api.entity.Board;
+import com.example.demo.api.entity.File;
 import com.example.demo.api.repository.BoardRepository;
 import com.example.demo.api.request.PostBoardRequest;
 import com.example.demo.api.response.GetBoardResponse;
 import com.example.demo.api.response.PostBoardResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,8 +24,9 @@ import static com.example.demo.web.entity.BaseEntity.State.*;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final FileService fileService;
 
-    public PostBoardResponse createBoard(PostBoardRequest postBoardRequest) {
+    public PostBoardResponse createBoard(PostBoardRequest postBoardRequest) throws IOException {
         if (Objects.nonNull(postBoardRequest.getId())) {
             Board board = makeBoard(postBoardRequest.getId());
 
@@ -34,6 +36,9 @@ public class BoardService {
         }
 
         Board board = new Board(postBoardRequest.getTitle(), postBoardRequest.getContent(), postBoardRequest.getWriter());
+        List<File> files = fileService.storeFiles(postBoardRequest.getFiles());
+        board.addFilesToBoard(files);
+
         boardRepository.save(board);
         return new PostBoardResponse(board.getId());
     }
