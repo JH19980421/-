@@ -1,7 +1,7 @@
 package com.example.demo.api.response;
 
 import com.example.demo.api.entity.Board;
-import com.example.demo.api.entity.File;
+import com.example.demo.api.entity.UploadFile;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,7 @@ public class GetBoardResponse {
     private String title;
     private String writer;
     private String content;
-    private List<File> files;
+    private List<UploadFile> uploadFiles;
     private State state;
 
     public GetBoardResponse(Board board) {
@@ -28,6 +28,6 @@ public class GetBoardResponse {
         this.content = board.getContent();
         this.writer = board.getWriter();
         this.state = board.getState();
-        this.files = board.getFiles();
+        this.uploadFiles = board.getUploadFiles();
     }
 }

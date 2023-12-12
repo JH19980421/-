@@ -63,6 +63,18 @@ public class UserService {
         Member member = userRepository.findByIdAndState(userId, ACTIVE)
                 .orElseThrow(() -> new BaseException(NOT_FIND_USER));
         member.updateName(patchUserRequest.getName());
+        member.updatePassword(passwordEncoder.encode(patchUserRequest.getPassword()));
+
+        userRepository.save(member);
+    }
+
+    public void modifyAccountDetail(String email, PostUserRequest postUserRequest) {
+        Member member = userRepository.findByEmailAndState(email, ACTIVE).orElseThrow(()->new BaseException(NOT_FIND_USER));
+
+        member.updateName(postUserRequest.getName());
+        member.updatePassword(passwordEncoder.encode(postUserRequest.getPassword()));
+
+        userRepository.save(member);
     }
 
     public void deleteUser(Long userId) {
@@ -123,4 +135,5 @@ public class UserService {
         Member member = userRepository.findByEmailAndState(email, ACTIVE).orElseThrow(() -> new BaseException(NOT_FIND_USER));
         return new GetUserResponse(member);
     }
+
 }

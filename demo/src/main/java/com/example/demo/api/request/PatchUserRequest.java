@@ -7,10 +7,8 @@ import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class PatchUserRequest {
     private String name;
-
-    public String getName() {
-        return name;
-    }
+    private String password;
 }

@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,6 +17,7 @@ public class Board extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "board_id")
     private Long id;
     @NotNull
     @Size(min = 1, max = 100)
@@ -26,8 +28,8 @@ public class Board extends BaseEntity {
     @NotNull
     @Size(min = 1, max = 10)
     private String writer;
-    @OneToMany(mappedBy = "board")
-    private List<File> files;
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private List<UploadFile> uploadFiles = new ArrayList<>();
     @Column
     private int views = 0;
 
@@ -37,8 +39,8 @@ public class Board extends BaseEntity {
         this.writer = writer;
     }
 
-    public void addFilesToBoard(List<File> files) {
-        this.files = files;
+    public void addFilesToBoard(List<UploadFile> uploadFiles) {
+        this.uploadFiles = uploadFiles;
     }
 
     public void deleteBoard() {

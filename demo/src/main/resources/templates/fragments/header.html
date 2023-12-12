@@ -24,7 +24,8 @@
   
         <div class="text-end" >
           <button sec:authorize="isAnonymous()" type="button" class="btn btn-warning" onclick="location.href='/sign';">로그인/회원가입</button>
-          <button sec:authorize="isAuthenticated()" th:text="${#authentication.principal.name}" type="button" class="btn btn-warning" onclick="location.href='/logout';"></button>
+<!--          <button sec:authorize="isAuthenticated()" th:text="${#authentication.principal.name}" type="button" class="btn btn-warning" onclick="location.href='/logout';"></button>-->
+          <button sec:authorize="isAuthenticated()" th:text="${#authentication.principal.name}" type="button" class="btn btn-warning" onclick="location.href='/profile';"></button>
         </div>
       </div>
     </div>

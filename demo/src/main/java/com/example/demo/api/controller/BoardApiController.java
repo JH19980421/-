@@ -40,9 +40,11 @@ public class BoardApiController {
     }
 
     @PatchMapping("/{id}")
-    public BaseResponse<GetBoardResponse> modifyBoard(@PathVariable Long id, @RequestBody PostBoardRequest postBoardRequest) {
+    public BaseResponse<GetBoardResponse> modifyBoard(@PathVariable Long id, @RequestBody PostBoardRequest postBoardRequest) throws IOException{
         GetBoardResponse getBoardResponse = boardService.modifyBoard(id, postBoardRequest);
 
         return new BaseResponse<>(getBoardResponse);
     }
+
+
 }

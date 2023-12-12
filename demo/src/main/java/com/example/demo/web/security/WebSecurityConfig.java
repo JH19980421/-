@@ -34,12 +34,12 @@ public class WebSecurityConfig {
                         .loginProcessingUrl("/signin")
                         .defaultSuccessUrl("/app/boards/home", true)
                         .permitAll()
-                )
-                .logout((logout) -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .logoutSuccessUrl("/app/boards/home")
-                        .invalidateHttpSession(true)
-                        .permitAll());
+                );
+//                .logout((logout) -> logout
+//                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//                        .logoutSuccessUrl("/app/boards/home")
+//                        .invalidateHttpSession(true)
+//                        .permitAll());
 
         return http.build();
     }

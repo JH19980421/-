@@ -1,6 +1,5 @@
 package com.example.demo.api.request;
 
-import com.example.demo.api.entity.File;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +20,6 @@ public class PostBoardRequest {
     private String content;
     @Size(min = 1, max = 10)
     private String writer;
-    private List<MultipartFile> files;
+    private List<MultipartFile> uploadFiles;
 
 }

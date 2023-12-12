@@ -1,7 +1,7 @@
 package com.example.demo.api.service;
 
 import com.example.demo.api.entity.Board;
-import com.example.demo.api.entity.File;
+import com.example.demo.api.entity.UploadFile;
 import com.example.demo.api.repository.BoardRepository;
 import com.example.demo.api.request.PostBoardRequest;
 import com.example.demo.api.response.GetBoardResponse;
@@ -18,34 +18,36 @@ import java.util.Objects;
 
 import static com.example.demo.web.entity.BaseEntity.State.*;
 
-@Transactional
+
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private final FileService fileService;
+    private final UploadFileService uploadFileService;
 
     public PostBoardResponse createBoard(PostBoardRequest postBoardRequest) throws IOException {
         if (Objects.nonNull(postBoardRequest.getId())) {
             Board board = makeBoard(postBoardRequest.getId());
 
             // Null 익셉션
-            board.modifyBoard(postBoardRequest);
+            modifyBoard(board.getId(), postBoardRequest);
             return new PostBoardResponse(board.getId());
         }
 
         Board board = new Board(postBoardRequest.getTitle(), postBoardRequest.getContent(), postBoardRequest.getWriter());
-        List<File> files = fileService.storeFiles(postBoardRequest.getFiles());
-        board.addFilesToBoard(files);
+        List<UploadFile> uploadFiles = uploadFileService.storeFiles(postBoardRequest.getUploadFiles());
+        board.addFilesToBoard(uploadFiles);
 
         boardRepository.save(board);
+//        System.out.println("check : "+board.getFiles().isEmpty());
         return new PostBoardResponse(board.getId());
     }
 
     public GetBoardResponse getBoard(Long id) {
         Board board = makeBoard(id);
-
+        System.out.println("check board : " + board.getUploadFiles().isEmpty());
         return new GetBoardResponse(board);
     }
 
@@ -57,9 +59,11 @@ public class BoardService {
         return new GetBoardResponse(board);
     }
 
-    public GetBoardResponse modifyBoard(Long id, PostBoardRequest postBoardRequest) {
+    public GetBoardResponse modifyBoard(Long id, PostBoardRequest postBoardRequest) throws IOException{
         Board board = makeBoard(id);
         board.modifyBoard(postBoardRequest);
+        board.addFilesToBoard(uploadFileService.storeFiles(postBoardRequest.getUploadFiles()));
+        boardRepository.save(board);
         return new GetBoardResponse(board);
     }
 

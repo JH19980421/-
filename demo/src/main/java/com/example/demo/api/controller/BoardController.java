@@ -1,12 +1,15 @@
 package com.example.demo.api.controller;
 
 import com.example.demo.api.entity.Board;
+import com.example.demo.api.request.PatchUserRequest;
 import com.example.demo.api.request.PostBoardRequest;
 import com.example.demo.api.response.GetBoardResponse;
 import com.example.demo.api.service.BoardService;
-import lombok.Getter;
+import com.example.demo.api.service.UploadFileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Objects;
 
 @Slf4j
@@ -24,6 +28,7 @@ import java.util.Objects;
 @RequestMapping("/app/boards")
 public class BoardController {
     private final BoardService boardService;
+    private final UploadFileService uploadFileService;
 
     @GetMapping("/home")
     public String getBoardList(Model model, @PageableDefault(size = 20) Pageable pageable,
@@ -66,8 +71,12 @@ public class BoardController {
 
         GetBoardResponse getBoardResponse = boardService.getBoard(id);
         model.addAttribute("board", getBoardResponse);
-
         return "write";
+    }
+
+    @GetMapping("/images/{filename}")
+    public Resource showImage(@PathVariable String filename) throws MalformedURLException {
+        return new UrlResource("file:" + uploadFileService.getFullPath(filename));
     }
 
     @PostMapping("/write")
@@ -77,7 +86,8 @@ public class BoardController {
         }
 
         boardService.createBoard(postBoardRequest);
-
         return "redirect:home";
     }
+
+
 }
