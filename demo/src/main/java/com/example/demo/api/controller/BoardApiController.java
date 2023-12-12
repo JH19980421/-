@@ -45,6 +45,4 @@ public class BoardApiController {
 
         return new BaseResponse<>(getBoardResponse);
     }
-
-
 }

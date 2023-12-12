@@ -16,16 +16,16 @@
           <li><a class="nav-link px-2 text-secondary" th:href="@{home}">홈</a></li>
           <li><a class="nav-link px-2 text-white" th:href="@{home}">게시판</a></li>
         </ul>
-  
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
-            aria-label="Search">
-        </form>
-  
+
+<!--        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">-->
+<!--          <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."-->
+<!--            aria-label="Search">-->
+<!--        </form>-->
+
         <div class="text-end" >
           <button sec:authorize="isAnonymous()" type="button" class="btn btn-warning" onclick="location.href='/sign';">로그인/회원가입</button>
-<!--          <button sec:authorize="isAuthenticated()" th:text="${#authentication.principal.name}" type="button" class="btn btn-warning" onclick="location.href='/logout';"></button>-->
           <button sec:authorize="isAuthenticated()" th:text="${#authentication.principal.name}" type="button" class="btn btn-warning" onclick="location.href='/profile';"></button>
+          <button sec:authorize="isAuthenticated()" class="btn btn-warning" onclick="location.href='/logout';">로그아웃</button>
         </div>
       </div>
     </div>
