@@ -1,0 +1,21 @@
+package com.example.demo.api.service;
+
+import com.example.demo.api.repository.ChatMessageRepository;
+import com.example.demo.api.request.PostChatMessageRequest;
+import com.example.demo.api.response.PostChatRoomResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+@RequiredArgsConstructor
+@Service
+@Transactional
+public class ChatMessageService {
+    private final ChatMessageRepository chatMessageRepository;
+
+    private PostChatRoomResponse createChatMessage(PostChatMessageRequest postChatMessageRequest) {
+        Optional<Chat>
+    }
+}
