@@ -1,6 +1,6 @@
-const url = "ws://localhost:8080/chat";
-const subscribe = "/app/chats/subscribe/greetings";
-const publish = "/app/chats/publish/hello";
+const url = 'ws://localhost:8080/chat';
+const subscribe = '/subscribe/greetings';
+const publish = '/publish/hello';
 const client = new StompJs.Client({
     brokerURL: url
 });
@@ -65,7 +65,8 @@ function sendMessage() {
 }
 
 function showGreeting(message) {
-    greeting.innerHTML += "<tr><td>" + message + "</td></tr>";
+    console.log(message + 'gotten')
+    greetings.innerHTML += "<tr><td>" + message + "</td></tr>";
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -96,3 +97,12 @@ document.addEventListener("DOMContentLoaded", function() {
     formInput.addEventListener("submit", (e) => e.preventDefault());
     setConnected(false);
 });
+
+function isJsonString(str) {
+    try {
+        JSON.parse(str);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}

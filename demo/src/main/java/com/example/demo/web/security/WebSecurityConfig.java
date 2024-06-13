@@ -20,9 +20,10 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/app/boards/home","/app/users/auth/google/login","/app/users/auth/kakao/login",
-                                "/app/users/signup","/css/**", "/js/**").permitAll()
-                        .anyRequest().authenticated()
+//                        .antMatchers("/app/boards/home","/app/users/auth/google/login","/app/users/auth/kakao/login",
+//                                "/app/users/signup","/css/**", "/js/**").permitAll()
+//                        .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 .csrf((csrf) -> csrf
                         .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**")))
